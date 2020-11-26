@@ -12,7 +12,7 @@ module Presenter
     table = @toggle ? print_expense : print_income
     puts table
   end
-  
+
   def toggle_category
     @toggle = !@toggle
   end
@@ -50,7 +50,7 @@ module Presenter
       category[:transaction_type] == "expense"
     end
 
-    result = categories_filter.map do |category_filter|
+    categories_filter.map do |category_filter|
       [
         category_filter[:id],
         category_filter[:name],
@@ -63,7 +63,6 @@ module Presenter
         end.sum
       ]
     end
-    result
   end
 
   def category_filter_income
@@ -71,7 +70,7 @@ module Presenter
       category[:transaction_type] == "income"
     end
 
-    result = categories_filter.map do |category_filter|
+    categories_filter.map do |category_filter|
       [
         category_filter[:id],
         category_filter[:name],
@@ -84,7 +83,6 @@ module Presenter
         end.sum
       ]
     end
-    result
   end
 
   def user_form
