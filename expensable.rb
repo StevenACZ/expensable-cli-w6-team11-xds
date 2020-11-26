@@ -1,11 +1,13 @@
 require_relative "presenter"
 require_relative "requester"
 require_relative "user"
+require_relative "session"
 
 class Expensable
   include Presenter
   include Requester
   include User
+  include Session
 
   def initialize
     @user = nil

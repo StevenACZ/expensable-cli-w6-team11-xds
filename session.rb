@@ -6,7 +6,7 @@ module Session
 
     @user = SessionController.login(login_data)
   rescue Net::HTTPError => e
-    puts e.response.parsed_response
+    e.response.parsed_response["errors"].each { |error| puts error }
     puts
   end
 end
