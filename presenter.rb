@@ -36,8 +36,8 @@ module Presenter
   end
 
   def get_email(prompt, input)
-    while !valid_email?(input)
-      puts "Invalid format" if !valid_email?(input)
+    until valid_email?(input)
+      puts "Invalid format" unless valid_email?(input)
       print prompt
       input = gets.chomp.strip
     end
