@@ -13,8 +13,6 @@ module Presenter
     puts table
   end
 
-  private
-
   def toggle_category
     @toggle = !@toggle
   end
