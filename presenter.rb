@@ -13,6 +13,8 @@ module Presenter
     puts table
   end
 
+  private
+
   def toggle_category
     @toggle = !@toggle
   end
@@ -23,10 +25,6 @@ module Presenter
 
   def prev_month
     @current_month = @current_month.prev_month
-  end
-
-  def show_category(id)
-    puts "Soy un show category #{id}"
   end
 
   def print_expense
