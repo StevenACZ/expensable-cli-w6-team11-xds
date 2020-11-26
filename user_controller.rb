@@ -13,6 +13,7 @@ class UserController
 
     response = post("/signup", options)
     raise Net::HTTPError.new(response.parsed_response, response) unless response.success?
-    data = JSON.parse(response.body, symbolize_names: true)
+
+    JSON.parse(response.body, symbolize_names: true)
   end
 end

@@ -10,7 +10,7 @@ class Expensable
   def initialize
     @user = nil
   end
-  
+
   def start
     until print_welcome
       action, _id = select_main_menu_action

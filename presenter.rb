@@ -12,7 +12,7 @@ module Presenter
     password = gets_string("Password: ", length: 6)
     first_name = gets_string("First name: ", length: 6)
     last_name = gets_string("Last name: ")
-    phone = gets_string("Phone: ") #Regex valid "Required format: +51 111222333 or 111222333"
+    phone = gets_string("Phone: ") # Regex valid "Required format: +51 111222333 or 111222333"
     { email: email, password: password, first_name: first_name, last_name: last_name, phone: phone }
   end
 
@@ -25,7 +25,7 @@ module Presenter
     input = gets.chomp.strip
     if required
       while input.empty? || input.size < length || !valid_email?(input)
-        puts error if !valid_email?(input)
+        puts error unless valid_email?(input)
         puts error if input.empty?
         puts "Minimun lenght of #{length}" if input.size < length
         print prompt
