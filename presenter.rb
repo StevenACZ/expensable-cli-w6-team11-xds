@@ -1,4 +1,5 @@
 require "terminal-table"
+require "date"
 
 module Presenter
   def print_welcome
@@ -7,12 +8,91 @@ module Presenter
     puts "####################################"
   end
 
+  def print_categories
+    table = @toggle ? print_expense : print_income
+    puts table
+  end
+  
+  def toggle_category
+    @toggle = !@toggle
+  end
+
+  def next_month
+    @current_month = @current_month.next_month
+  end
+
+  def prev_month
+    @current_month = @current_month.prev_month
+  end
+
+  def show_category(id)
+    puts "Soy un show category #{id}"
+  end
+
+  def print_expense
+    table = Terminal::Table.new
+    table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
+    table.headings = %w[ID Category Total]
+    table.rows = category_filter_expense
+    table
+  end
+
+  def print_income
+    table = Terminal::Table.new
+    table.title = "Expenses\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
+    table.headings = %w[ID Category Total]
+    table.rows = category_filter_income
+    table
+  end
+
+  def category_filter_expense
+    categories_filter = @categories.reject do |category|
+      category[:transaction_type] == "expense"
+    end
+
+    result = categories_filter.map do |category_filter|
+      [
+        category_filter[:id],
+        category_filter[:name],
+        category_filter[:transactions].map do |transaction|
+          if (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
+            transaction[:amount]
+          else
+            0
+          end
+        end.sum
+      ]
+    end
+    result
+  end
+
+  def category_filter_income
+    categories_filter = @categories.reject do |category|
+      category[:transaction_type] == "income"
+    end
+
+    result = categories_filter.map do |category_filter|
+      [
+        category_filter[:id],
+        category_filter[:name],
+        category_filter[:transactions].map do |transaction|
+          if (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
+            transaction[:amount]
+          else
+            0
+          end
+        end.sum
+      ]
+    end
+    result
+  end
+
   def user_form
     email = gets_string("Email: ", required: true, email: true)
     password = gets_string("Password: ", length: 6, required: true)
     first_name = gets_string("First name: ")
     last_name = gets_string("Last name: ")
-    phone = gets_string("Phone: ") # Regex valid "Required format: +51 111222333 or 111222333"
+    phone = gets_string("Phone: ")
     { email: email, password: password, first_name: first_name, last_name: last_name, phone: phone }
   end
 
