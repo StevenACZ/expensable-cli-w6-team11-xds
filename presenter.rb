@@ -105,9 +105,9 @@ module Presenter
     { email: email, password: password, first_name: first_name, last_name: last_name, phone: phone }
   end
 
-  def categorie_form
-    name = gets_categorie("Name: ", required: true)
-    transaction_type = gets_categorie("Transaction type: ", required: true, type: true)
+  def category_form
+    name = gets_string("Name: ", required: true)
+    transaction_type = gets_string("Transaction type: ", required: true)
     { name: name, transaction_type: transaction_type }
   end
 

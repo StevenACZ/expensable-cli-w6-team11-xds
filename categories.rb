@@ -9,9 +9,9 @@ module Categories
   end
 
   def create_category
-    categorie_data = categorie_form
+    category_data = category_form
 
-    @categories.push(CategoriesController.create(@user[:token], categorie_data))
+    @categories.push(CategoriesController.create(@user[:token], category_data))
   rescue Net::HTTPError => e
     e.response.parsed_response["errors"].each { |error| puts error }
     puts
