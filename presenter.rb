@@ -1,5 +1,6 @@
 require "terminal-table"
 require "date"
+require "time"
 
 module Presenter
   def print_welcome
@@ -30,7 +31,7 @@ module Presenter
     transactions_filter.map do |transaction|
       [
         transaction[:id],
-        transaction[:date],
+        Time.parse(transaction[:date]).strftime("%a, %b %d"),
         transaction[:amount],
         transaction[:notes]
       ]
