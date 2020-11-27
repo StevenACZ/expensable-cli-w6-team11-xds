@@ -18,4 +18,15 @@ module Transaction
     updated_transaction = TransactionController.update(@user[:token], category_id, new_transaction_data, id)
     @transactions[index] = updated_transaction
   end
+
+  def delete_transaction(category_id, id)
+    index = @transactions.find_index { |transaction| transaction[:id] == id.to_i }
+
+    delete_transaction = TransactionController.destroy(@user[:token], category_id, id)
+    if delete_transaction
+      @transactions[index] = delete_transaction
+    else
+      @transactions.reject! { |transaction| transaction[:id] == id.to_i }
+    end
+  end
 end
