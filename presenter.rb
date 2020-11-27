@@ -13,6 +13,29 @@ module Presenter
     puts table
   end
 
+  def print_transaction
+    table = Terminal::Table.new
+    table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
+    table.headings = %w[ID Date Amount Notes]
+    table.rows = transaction_filter
+    puts table
+  end
+
+  def transaction_filter
+    transactions_filter = @transactions.select do |transaction|
+      (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
+    end
+
+    transactions_filter.map do |transaction|
+      [
+        transaction[:id],
+        transaction[:amount],
+        transaction[:date],
+        transaction[:notes]
+      ]
+    end
+  end
+
   def print_expense
     table = Terminal::Table.new
     table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
