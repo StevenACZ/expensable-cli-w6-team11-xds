@@ -121,14 +121,21 @@ module Presenter
     { amount: amount, notes: notes, date: date }
   end
 
-  def valid_email?(email)
-    email.match(URI::MailTo::EMAIL_REGEXP) ? true : false
+  def new_categorie_form
+    amount = gets_string("Amount: ", required: true)
+    date = gets_string("Date: ", required: true)
+    notes = gets_string("Notes: ")
+    { amount: amount, date: date, notes: notes }
   end
 
-  def valid_transaction_type?(type)
-    # if type == "income" || type == "expense"
-    # else puts "Only income or expense"
-    # end
+  def update_category_form
+    name = gets_string("Name: ", required: true)
+    transaction_type = gets_string("Transaction type: ", required: true)
+    { name: name, transaction_type: transaction_type }
+  end
+
+  def valid_email?(email)
+    email.match(URI::MailTo::EMAIL_REGEXP) ? true : false
   end
 
   def gets_string(prompt, required: false, length: 0, email: false)
@@ -138,11 +145,6 @@ module Presenter
     input = get_length(prompt, input, length) if length.positive?
     input = get_email(prompt, input) if email
     input
-  end
-
-  def gets_categorie(prompt, _input)
-    print prompt
-    gets.chomp.strip
   end
 
   def get_email(prompt, input)
