@@ -29,8 +29,8 @@ module Presenter
     transactions_filter.map do |transaction|
       [
         transaction[:id],
-        transaction[:amount],
         transaction[:date],
+        transaction[:amount],
         transaction[:notes]
       ]
     end
@@ -105,6 +105,13 @@ module Presenter
     email = gets_string("Email: ", email: true, required: true)
     password = gets_string("Password: ", length: 6, required: true)
     { email: email, password: password }
+  end
+
+  def transaction_form
+    amount = gets_string("Amount: ", required: true)
+    notes = gets_string("Notes: ")
+    date = gets_string("Date: ", required: true)
+    { amount: amount, notes: notes, date: date }
   end
 
   def valid_email?(email)

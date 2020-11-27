@@ -52,14 +52,14 @@ class Expensable
     end
   end
 
-  def transaction_page(id)
-    load_transactions(id)
+  def transaction_page(category_id)
+    load_transactions(category_id)
     until print_transaction
       action, id = select_transaction_menu_action
       case action
-      when "add" then add_transaction
-      when "update" then update_transaction(id)
-      when "delete" then delete_transaction(id)
+      when "add" then add_transaction(category_id)
+      when "update" then update_transaction(category_id, id)
+      when "delete" then delete_transaction(category_id, id)
       when "next" then next_month
       when "prev" then prev_month
       when "back" then break
