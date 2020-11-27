@@ -1,5 +1,6 @@
 require "terminal-table"
 require "date"
+require "time"
 
 module Presenter
   def print_welcome
@@ -22,21 +23,6 @@ module Presenter
     puts table
   end
 
-  def transaction_filter
-    transactions_filter = @transactions.select do |transaction|
-      (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
-    end
-
-    transactions_filter.map do |transaction|
-      [
-        transaction[:id],
-        transaction[:date],
-        transaction[:amount],
-        transaction[:notes]
-      ]
-    end
-  end
-
   def print_expense
     table = Terminal::Table.new
     table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
@@ -51,6 +37,23 @@ module Presenter
     table.headings = %w[ID Category Total]
     table.rows = category_filter_income
     table
+  end
+
+  private
+
+  def transaction_filter
+    transactions_filter = @transactions.select do |transaction|
+      (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
+    end
+
+    transactions_filter.map do |transaction|
+      [
+        transaction[:id],
+        Time.parse(transaction[:date]).strftime("%a, %b %d"),
+        transaction[:amount],
+        transaction[:notes]
+      ]
+    end
   end
 
   def category_filter_expense
