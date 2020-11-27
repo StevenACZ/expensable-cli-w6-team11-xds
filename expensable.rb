@@ -18,6 +18,7 @@ class Expensable
     @categories = nil
     @toggle = false
     @current_month = Date.today
+    @transactions = nil
   end
 
   def start
@@ -35,21 +36,39 @@ class Expensable
   def categories_page
     load_categories
     puts "Welcome back #{@user[:first_name]} #{@user[:last_name]}"
-    print_categories
-    action, id = select_categories_menu_action
-    until action == "logout"
+    until print_categories
+      action, id = select_categories_menu_action
       case action
       when "create" then create_category
-      when "show" then show_category(id)
+      when "show" then transaction_page(id)
       when "update" then update_category(id)
       when "delete" then delete_category(id)
       when "add-to" then add - to_category(id)
       when "toggle" then toggle_category
       when "next" then next_month
       when "prev" then prev_month
+      when "logout" then break
       end
-      print_categories
-      action, id = select_categories_menu_action
+    end
+  end
+
+  def transaction_page(category_id)
+    load_transactions(category_id)
+    until print_transaction(category_id)
+      action, id = select_transaction_menu_action
+      begin
+        case action
+        when "add" then add_transaction(category_id)
+        when "update" then update_transaction(category_id, id)
+        when "delete" then delete_transaction(category_id, id)
+        when "next" then next_month
+        when "prev" then prev_month
+        when "back" then break
+        end
+      rescue Net::HTTPError => e
+        e.response.parsed_response["errors"].each { |error| puts error }
+        puts
+      end
     end
   end
 end

@@ -11,6 +11,12 @@ module Requester
     gets_option(prompt, options)
   end
 
+  def select_transaction_menu_action
+    prompt = "add | update ID | delete ID | next | prev | back"
+    options = %w[add update delete next prev back]
+    gets_option(prompt, options)
+  end
+
   private
 
   def gets_option(prompt, options, required: true)
