@@ -16,4 +16,29 @@ module Transaction
     e.response.parsed_response["errors"].each { |error| puts error }
     puts
   end
+
+  def update_transaction(category_id, id)
+    index = @transactions.find_index { |transaction| transaction[:id] == id.to_i }
+    new_transaction_data = transaction_form
+
+    updated_transaction = TransactionController.update(@user[:token], category_id, new_transaction_data, id)
+    @transactions[index] = updated_transaction
+  rescue Net::HTTPError => e
+    e.response.parsed_response["errors"].each { |error| puts error }
+    puts
+  end
+
+  def delete_transaction(category_id, id)
+    index = @transactions.find_index { |transaction| transaction[:id] == id.to_i }
+
+    delete_transaction = TransactionController.destroy(@user[:token], category_id, id)
+    if delete_transaction
+      @transactions[index] = delete_transaction
+    else
+      @transactions.reject! { |transaction| transaction[:id] == id.to_i }
+    end
+  rescue Net::HTTPError => e
+    e.response.parsed_response["errors"].each { |error| puts error }
+    puts
+  end
 end
