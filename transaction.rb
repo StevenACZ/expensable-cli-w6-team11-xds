@@ -10,4 +10,12 @@ module Transaction
 
     @transactions.push(TransactionController.add(@user[:token], category_id, new_transaction_data))
   end
+
+  def update_transaction(category_id, id)
+    index = @transactions.find_index { |transaction| transaction[:id] == id.to_i }
+    new_transaction_data = transaction_form
+
+    updated_transaction = TransactionController.update(@user[:token], category_id, new_transaction_data, id)
+    @transactions[index] = updated_transaction
+  end
 end
