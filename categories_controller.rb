@@ -15,4 +15,16 @@ class CategoriesController
 
     JSON.parse(response.body, symbolize_names: true)
   end
+
+  def self.create(token, categorie_data)
+    options = {
+      headers: { "Content-Type" => "application/json", "Authorization" => "Token token=#{token}" },
+      body: categorie_data.to_json
+    }
+
+    response = post("/categories", options)
+    raise Net::HTTPError.new(response.parsed_response, response) unless response.success?
+
+    JSON.parse(response.body, symbolize_names: true)
+  end
 end

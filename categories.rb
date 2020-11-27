@@ -8,6 +8,15 @@ module Categories
     puts
   end
 
+  def create_category
+    categorie_data = categorie_form
+
+    @categories.push(CategoriesController.create(@user[:token], categorie_data))
+  rescue Net::HTTPError => e
+    e.response.parsed_response["errors"].each { |error| puts error }
+    puts
+  end
+
   def toggle_category
     @toggle = !@toggle
   end

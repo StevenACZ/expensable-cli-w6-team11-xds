@@ -78,6 +78,12 @@ module Presenter
     { email: email, password: password, first_name: first_name, last_name: last_name, phone: phone }
   end
 
+  def categorie_form
+    name = gets_categorie("Name: ", required: true)
+    transaction_type = gets_categorie("Transaction type: ", required: true, type: true)
+    { name: name, transaction_type: transaction_type }
+  end
+
   def login_form
     email = gets_string("Email: ", email: true, required: true)
     password = gets_string("Password: ", length: 6, required: true)
@@ -88,6 +94,12 @@ module Presenter
     email.match(URI::MailTo::EMAIL_REGEXP) ? true : false
   end
 
+  def valid_transaction_type?(type)
+    # if type == "income" || type == "expense"
+    # else puts "Only income or expense"
+    # end
+  end
+
   def gets_string(prompt, required: false, length: 0, email: false)
     print prompt
     input = gets.chomp.strip
@@ -95,6 +107,11 @@ module Presenter
     input = get_length(prompt, input, length) if length.positive?
     input = get_email(prompt, input) if email
     input
+  end
+
+  def gets_categorie(prompt, _input)
+    print prompt
+    gets.chomp.strip
   end
 
   def get_email(prompt, input)
