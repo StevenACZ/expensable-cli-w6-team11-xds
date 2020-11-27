@@ -56,13 +56,18 @@ class Expensable
     load_transactions(category_id)
     until print_transaction
       action, id = select_transaction_menu_action
-      case action
-      when "add" then add_transaction(category_id)
-      when "update" then update_transaction(category_id, id)
-      when "delete" then delete_transaction(category_id, id)
-      when "next" then next_month
-      when "prev" then prev_month
-      when "back" then break
+      begin
+        case action
+        when "add" then add_transaction(category_id)
+        when "update" then update_transaction(category_id, id)
+        when "delete" then delete_transaction(category_id, id)
+        when "next" then next_month
+        when "prev" then prev_month
+        when "back" then break
+        end
+      rescue Net::HTTPError => e
+        e.response.parsed_response["errors"].each { |error| puts error }
+        puts
       end
     end
   end
