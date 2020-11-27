@@ -6,7 +6,7 @@ module Requester
   end
 
   def select_categories_menu_action
-    prompt = "create | show | update | delete | add-to | toggle | next | prev | logout"
+    prompt = "create | show ID | update ID | delete ID | add-to ID | toggle | next | prev | logout"
     options = %w[create show update delete add-to toggle next prev logout]
     gets_option(prompt, options)
   end

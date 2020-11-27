@@ -8,6 +8,39 @@ module Categories
     puts
   end
 
+  def create_category
+    categorie_data = categorie_form
+
+    @categories.push(CategoriesController.create(@user[:token], categorie_data))
+  rescue Net::HTTPError => e
+    e.response.parsed_response["errors"].each { |error| puts error }
+    puts
+  end
+
+  def add_to_category(category_id)
+    new_categorie_data = new_categorie_form
+    index = @categories.find_index { |category| category[:id] == category_id.to_i }
+    @categories[index][:transactions].push(CategoriesController.add_to(@user[:token], category_id, new_categorie_data))
+  end
+
+  def update_category(category_id)
+    update_category_data = update_category_form
+    index = @categories.find_index { |category| category[:id] == category_id.to_i }
+
+    updated_category = CategoriesController.update(@user[:token], category_id, update_category_data)
+    @categories[index] = updated_category
+  end
+
+  def delete_category(category_id)
+    index = @categories.find_index { |category| category[:id] == category_id.to_i }
+    deleted_category = CategoriesController.destroy(@user[:token], category_id)
+    if deleted_category
+      @categories[index] = deleted_category
+    else
+      @categories.reject! { |category| category[:id] == category_id.to_i }
+    end
+  end
+
   def toggle_category
     @toggle = !@toggle
   end

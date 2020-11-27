@@ -43,7 +43,7 @@ class Expensable
       when "show" then transaction_page(id)
       when "update" then update_category(id)
       when "delete" then delete_category(id)
-      when "add-to" then add - to_category(id)
+      when "add-to" then add_to_category(id)
       when "toggle" then toggle_category
       when "next" then next_month
       when "prev" then prev_month
