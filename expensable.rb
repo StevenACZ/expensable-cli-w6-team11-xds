@@ -3,6 +3,7 @@ require_relative "requester"
 require_relative "user"
 require_relative "session"
 require_relative "categories"
+require_relative "transaction"
 
 class Expensable
   include Presenter
@@ -10,6 +11,7 @@ class Expensable
   include User
   include Session
   include Categories
+  include Transaction
 
   def initialize
     @user = nil
