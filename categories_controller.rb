@@ -16,10 +16,10 @@ class CategoriesController
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.create(token, categorie_data)
+  def self.create(token, category_data)
     options = {
       headers: { "Content-Type" => "application/json", "Authorization" => "Token token=#{token}" },
-      body: categorie_data.to_json
+      body: category_data.to_json
     }
 
     response = post("/categories", options)
