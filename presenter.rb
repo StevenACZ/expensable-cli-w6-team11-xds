@@ -13,9 +13,10 @@ module Presenter
     puts table
   end
 
-  def print_transaction
+  def print_transaction(category_id)
+    index = @categories.find_index { |category| category[:id] == category_id.to_i }
     table = Terminal::Table.new
-    table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
+    table.title = "#{@categories[index][:name]}\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
     table.headings = %w[ID Date Amount Notes]
     table.rows = transaction_filter
     puts table

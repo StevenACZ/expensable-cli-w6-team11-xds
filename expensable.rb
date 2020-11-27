@@ -54,7 +54,7 @@ class Expensable
 
   def transaction_page(category_id)
     load_transactions(category_id)
-    until print_transaction
+    until print_transaction(category_id)
       action, id = select_transaction_menu_action
       begin
         case action
