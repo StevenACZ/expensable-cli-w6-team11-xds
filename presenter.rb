@@ -13,18 +13,6 @@ module Presenter
     puts table
   end
 
-  def toggle_category
-    @toggle = !@toggle
-  end
-
-  def next_month
-    @current_month = @current_month.next_month
-  end
-
-  def prev_month
-    @current_month = @current_month.prev_month
-  end
-
   def print_expense
     table = Terminal::Table.new
     table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"

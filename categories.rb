@@ -7,4 +7,16 @@ module Categories
     e.response.parsed_response["errors"].each { |error| puts error }
     puts
   end
+
+  def toggle_category
+    @toggle = !@toggle
+  end
+
+  def next_month
+    @current_month = @current_month.next_month
+  end
+
+  def prev_month
+    @current_month = @current_month.prev_month
+  end
 end
