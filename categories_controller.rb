@@ -52,13 +52,12 @@ class CategoriesController
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.delete(token, category_id)
+  def self.destroy(token, category_id)
     options = {
       headers: { "Authorization" => "Token token=#{token}" }
     }
 
     response = delete("/categories/#{category_id}", options)
-    p response
     raise Net::HTTPError.new(response.message, response) unless response.success?
 
     JSON.parse(response.body, symbolize_names: true) if response.body
