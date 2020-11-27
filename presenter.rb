@@ -13,6 +13,30 @@ module Presenter
     puts table
   end
 
+  def print_transaction(category_id)
+    index = @categories.find_index { |category| category[:id] == category_id.to_i }
+    table = Terminal::Table.new
+    table.title = "#{@categories[index][:name]}\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
+    table.headings = %w[ID Date Amount Notes]
+    table.rows = transaction_filter
+    puts table
+  end
+
+  def transaction_filter
+    transactions_filter = @transactions.select do |transaction|
+      (transaction[:date].split("-"))[1] == @current_month.strftime("%m")
+    end
+
+    transactions_filter.map do |transaction|
+      [
+        transaction[:id],
+        transaction[:date],
+        transaction[:amount],
+        transaction[:notes]
+      ]
+    end
+  end
+
   def print_expense
     table = Terminal::Table.new
     table.title = "Income\n#{@current_month.strftime('%B')} #{@current_month.strftime('%Y')}"
@@ -88,6 +112,13 @@ module Presenter
     email = gets_string("Email: ", email: true, required: true)
     password = gets_string("Password: ", length: 6, required: true)
     { email: email, password: password }
+  end
+
+  def transaction_form
+    amount = gets_string("Amount: ", required: true)
+    notes = gets_string("Notes: ")
+    date = gets_string("Date: ", required: true)
+    { amount: amount, notes: notes, date: date }
   end
 
   def valid_email?(email)
