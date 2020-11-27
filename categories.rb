@@ -32,7 +32,9 @@ module Categories
   end
 
   def delete_category(category_id)
+    p category_id
     index = @categories.find_index { |category| category[:id] == category_id.to_i }
+    p index
     delete_category = CategoriesController.delete(@user[:token], category_id)
     if delete_category
       @categories[index] = delete_category

@@ -58,6 +58,7 @@ class CategoriesController
     }
 
     response = delete("/categories/#{category_id}", options)
+    p response
     raise Net::HTTPError.new(response.message, response) unless response.success?
 
     JSON.parse(response.body, symbolize_names: true) if response.body
