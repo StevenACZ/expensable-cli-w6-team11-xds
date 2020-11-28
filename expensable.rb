@@ -33,6 +33,7 @@ class Expensable
       end
       categories_page if @user
     end
+    print_end
   end
 
   def categories_page
