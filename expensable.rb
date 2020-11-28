@@ -26,10 +26,15 @@ class Expensable
   def start
     until print_welcome
       action, _id = select_main_menu_action
-      case action
-      when "login" then login
-      when "create_user" then creater_user
-      when "exit" then break
+      begin
+        case action
+        when "login" then login
+        when "create_user" then creater_user
+        when "exit" then break
+        end
+      rescue Net::HTTPError => e
+        e.response.parsed_response["errors"].each { |error| puts error }
+        puts
       end
       categories_page if @user
     end
@@ -81,5 +86,5 @@ class Expensable
   end
 end
 
-# app = Expensable.new
-# app.start
+app = Expensable.new
+app.start
