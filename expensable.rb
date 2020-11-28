@@ -13,6 +13,8 @@ class Expensable
   include Categories
   include Transaction
 
+  attr_reader :user, :categories, :toggle, :current_month, :transactions
+
   def initialize
     @user = nil
     @categories = nil
@@ -78,5 +80,5 @@ class Expensable
   end
 end
 
-app = Expensable.new
-app.start
+# app = Expensable.new
+# app.start
