@@ -5,9 +5,6 @@ module Session
     login_data = login_form
 
     @user = SessionController.login(login_data)
-  rescue Net::HTTPError => e
-    e.response.parsed_response["errors"].each { |error| puts error }
-    puts
   end
 
   def logout
@@ -17,8 +14,5 @@ module Session
     @toggle = false
     @current_month = Date.today
     @transactions = nil
-  rescue Net::HTTPError => e
-    e.response.parsed_response["errors"].each { |error| puts error }
-    puts
   end
 end

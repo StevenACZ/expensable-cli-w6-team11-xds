@@ -5,9 +5,5 @@ module User
     user_data = user_form
 
     @user = UserController.create(user_data)
-  rescue Net::HTTPError => e
-    # Entresamos al objeto e y entramos al hash parsed_response y imprimimos casa error en cada linea
-    e.response.parsed_response["errors"].each { |error| puts error }
-    puts
   end
 end

@@ -3,18 +3,12 @@ require_relative "categories_controller"
 module Categories
   def load_categories
     @categories = CategoriesController.index(@user[:token])
-  rescue Net::HTTPError => e
-    e.response.parsed_response["errors"].each { |error| puts error }
-    puts
   end
 
   def create_category
     category_data = category_form
 
     @categories.push(CategoriesController.create(@user[:token], category_data))
-  rescue Net::HTTPError => e
-    e.response.parsed_response["errors"].each { |error| puts error }
-    puts
   end
 
   def add_to_category(category_id)
