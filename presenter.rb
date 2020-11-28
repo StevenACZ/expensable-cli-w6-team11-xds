@@ -9,6 +9,12 @@ module Presenter
     puts "####################################"
   end
 
+  def print_end
+    puts "####################################"
+    puts "#    Thanks for using Expensable   #"
+    puts "####################################"
+  end
+
   def print_categories
     table = @toggle ? print_expense : print_income
     puts table

@@ -13,6 +13,7 @@ class Expensable
   include Categories
   include Transaction
 
+  attr_reader :user, :categories, :toggle, :current_month, :transactions
 
   def initialize
     @user = nil
@@ -32,6 +33,7 @@ class Expensable
       end
       categories_page if @user
     end
+    print_end
   end
 
   def categories_page
@@ -39,16 +41,21 @@ class Expensable
     puts "Welcome back #{@user[:first_name]} #{@user[:last_name]}"
     until print_categories
       action, id = select_categories_menu_action
-      case action
-      when "create" then create_category
-      when "show" then transaction_page(id)
-      when "update" then update_category(id)
-      when "delete" then delete_category(id)
-      when "add-to" then add_to_category(id)
-      when "toggle" then toggle_category
-      when "next" then next_month
-      when "prev" then prev_month
-      when "logout" then break
+      begin
+        case action
+        when "create" then create_category
+        when "show" then transaction_page(id)
+        when "update" then update_category(id)
+        when "delete" then delete_category(id)
+        when "add-to" then add_to_category(id)
+        when "toggle" then toggle_category
+        when "next" then next_month
+        when "prev" then prev_month
+        when "logout" then break
+        end
+      rescue Net::HTTPError => e
+        e.response.parsed_response["errors"].each { |error| puts error }
+        puts
       end
     end
   end
