@@ -13,6 +13,7 @@ class Expensable
   include Categories
   include Transaction
 
+
   def initialize
     @user = nil
     @categories = nil
@@ -73,5 +74,5 @@ class Expensable
   end
 end
 
-app = Expensable.new
-app.start
+# app = Expensable.new
+# app.start
